@@ -1,0 +1,13 @@
+{
+  "name": "api-entregas-de-encomendas",
+  "version": "1.0.0",
+  "description": "Api de entregas de encomendas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  
+  "author": "Paulo Machava",
+  "license": "ISC"
+  
+}
