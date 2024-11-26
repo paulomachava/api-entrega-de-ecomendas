@@ -3,6 +3,9 @@ import {prisma} from "@/database/prisma"
 import {z} from 'zod'
 import { AppError } from "@/utils/AppError"
 import { compare } from "bcrypt"
+import { authConfig } from "@/configs/auth"
+import {sign} from "jsonwebtoken"
+
 
 
 class SessionsController{
@@ -24,13 +27,20 @@ class SessionsController{
    }
   const passwordMatched = await compare(password,user.password)
   if(!passwordMatched){
-    
+
     throw new AppError("Invalid email or password",401)
   }
 
-    return response.json({message:"ok"})
- }
+ const {secret,expiresIn} = authConfig.jwt
 
+ const token = sign({role:user.role ?? "customer"}, secret,{
+
+    subject:user.id,
+    expiresIn,
+ })
+ const{password:hashedpassword,...userWithoutPassword} = user
+    return response.json({token, user:userWithoutPassword})
+ }
 
 }
 export {SessionsController}
