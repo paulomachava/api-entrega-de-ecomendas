@@ -50,6 +50,12 @@ async show(request:Request,response:Response){
             
         }
     })
+  
+    if(!delivery){
+        return response.status(404).json({message:"delivery not found"})
+    }
+
+
 //Garantir que os usuarios vejam apenas os seus pedidos
     if(
         request.user?.role === "customer" && 
